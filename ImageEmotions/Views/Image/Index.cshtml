@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Image";
+}
+
+@model ImageEmotions.Models.EmotionsViewModel
+
+<div class="jumbotron">
+
+    @using (Html.BeginForm("Index", "Image", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group row" id="target">
+            @*<div >You can drag an image file here</div>*@
+            <label for="file" class="control-label col-md-2">Image:</label>
+            <div class="col-md-10">
+                <input type="file" name="file" id="file" class="form-control" accept="image/*" capture="user" onchange="PreviewImage();" />
+            </div>
+        </div>
+
+        <div class="form-group text-center">
+            <img id="uploadPreview" />
+        </div>
+
+        <div class="row">
+            <input type="submit" class="btn btn-default" />
+        </div>
+
+        @*@if (Model != null && Model.Emotions != null)
+        {
+            <div class="form-group row">
+                <div class="col-md-10 col-md-offset-1">
+
+                    <h2>File uploaded successfully</h2>
+                    @foreach (var emotion in Model.Emotions)
+                    {
+                        foreach (var score in emotion.Scores)
+                        {
+                            @Html.Partial("EmotionSlider", score)
+                        }
+                    }
+                </div>
+            </div>
+        }*@
+
+    }
+
+</div>
+
+@* Image Preview *@
+<script type="text/javascript">
+
+    function PreviewImage() {
+        var oFReader = new FileReader();
+        oFReader.readAsDataURL(document.getElementById("file").files[0]);
+
+        oFReader.onload = function (oFREvent) {
+            document.getElementById("uploadPreview").src = oFREvent.target.result;
+        };
+
+        //ajax call
+
+        //highlight faces
+
+        //add emotions
+    };
+
+</script>
+
+@* Image upload *@
+<script type="text/javascript">
+    const target = document.getElementById('target');
+
+    target.addEventListener('drop', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        //doSomethingWithFiles(e.dataTransfer.files);
+    });
+
+    target.addEventListener('dragover', (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer.dropEffect = 'copy';
+    });
+</script>
+
+@* Emotion API *@
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(function () {
+        var params = {
+            // Request parameters
+        };
+
+        //$.ajax({
+        //    url: "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize?" + $.param(params),
+        //    beforeSend: function (xhrObj) {
+        //        // Request headers
+        //        xhrObj.setRequestHeader("Content-Type", "application/json");
+        //        xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", "8054ac830fda40b7a531c8e310ccd0fc");
+        //    },
+        //    type: "POST",
+        //    // Request body
+        //    data: "{body}",
+        //})
+        //    .done(function (data) {
+        //        alert("success");
+        //    })
+        //    .fail(function () {
+        //        alert("error");
+        //    });
+
+    });
+</script>

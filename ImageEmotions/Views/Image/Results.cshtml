@@ -1,0 +1,31 @@
+﻿@{
+    ViewBag.Title = "Image";
+}
+
+@model ImageEmotions.Models.EmotionsViewModel
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h2>File analysis:</h2>
+
+        @if (Model.Emotions != null)
+        {
+            foreach (var emotion in Model.Emotions)
+            {
+                @*@Html.Partial("ImageFace", emotion.Face)*@
+
+                foreach (var score in emotion.Scores)
+                {
+                    @Html.Partial("EmotionSlider", score)
+                }
+            }
+        }
+
+        @Html.ActionLink("Back", "Index", null, new { @class = "form-control" })
+
+    </div>
+</div>
+@*<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+    </div>
+</div>*@

@@ -1,0 +1,12 @@
+﻿@model ImageEmotions.Models.EmotionScore
+
+@{
+    ViewBag.Title = "Error";
+}
+
+<div class="form-group">
+    <div class="progress-bar" role="progressbar" aria-valuenow="@(Model.value)"
+         aria-valuemin="0" aria-valuemax="100" style="width:@(Model.value)%">
+        <span>@(Model.value)% @(Model.key)</span>
+    </div>
+</div>
