@@ -4,9 +4,9 @@
     ViewBag.Title = "Error";
 }
 
-<div class="form-group">
+<div class="form-group progress">
     <div class="progress-bar" role="progressbar" aria-valuenow="@(Model.value)"
          aria-valuemin="0" aria-valuemax="100" style="width:@(Model.value)%">
-        <span>@(Model.value)% @(Model.key)</span>
+        <span>@(Model.value.ToString("0.##")) % @(Model.key)</span>
     </div>
 </div>
