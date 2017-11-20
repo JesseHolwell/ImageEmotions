@@ -1,5 +1,5 @@
 # ImageEmotions
-[imageemotion.azurewebsites.net](imageemotion.azurewebsites.net)
+[imageemotion.azurewebsites.net](http://www.imageemotion.azurewebsites.net)
 
 Microsoft Cognitive Services API testing -  EmotionsAPI
 
