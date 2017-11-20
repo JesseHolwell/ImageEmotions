@@ -28,12 +28,12 @@
                     {
                         new EmotionScore("anger", emotion.scores.anger*100),
                         new EmotionScore("contempt", emotion.scores.contempt*100),
+                        new EmotionScore("happiness", emotion.scores.happiness*100),
+                        new EmotionScore("surprise", emotion.scores.surprise*100),
                         new EmotionScore("disgust", emotion.scores.disgust*100),
                         new EmotionScore("fear", emotion.scores.fear*100),
-                        new EmotionScore("happiness", emotion.scores.happiness*100),
-                        new EmotionScore("neutral", emotion.scores.neutral*100),
                         new EmotionScore("sadness", emotion.scores.sadness*100),
-                        new EmotionScore("surprise", emotion.scores.surprise*100)
+                        new EmotionScore("neutral", emotion.scores.neutral*100)
                     };
                 model.Face = new Rectangle(emotion.faceRectangle.left, emotion.faceRectangle.top,
                     emotion.faceRectangle.width, emotion.faceRectangle.height);
@@ -71,10 +71,43 @@
         {
             this.key = Key;
             this.value = Value;
+
+            //switch (Key)
+            //{
+            //    case "anger":
+            //        this.color = "danger";
+            //        break;
+            //    case "contempt":
+            //        this.color = "danger";
+            //        break;
+            //    case "disgust":
+            //        this.color = "danger";
+            //        break;
+            //    case "fear":
+            //        this.color = "danger";
+            //        break;
+            //    case "happiness":
+            //        this.color = "success";
+            //        break;
+            //    case "neutral":
+            //        this.color = "danger";
+            //        break;
+            //    case "sadness":
+            //        this.color = "danger";
+            //        break;
+            //    case "surprise":
+            //        this.color = "danger";
+            //        break;
+            //    default:
+            //        this.color = "primary";
+            //        break;
+            //}
         }
 
         public string key { get; set; }
         public double value { get; set; }
+
+        public string color { get; set; }
     }
 
 

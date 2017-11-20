@@ -5,6 +5,7 @@
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -19,8 +20,67 @@
 
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
+}*/
+
+
+footer {
+    position:absolute;
+    bottom:0;
+    left:15px;
+    right:0;
+}
+
+
+/*progress bars value align center */
+.progress {
+    text-align:center;
+}
+.progress-value {
+    position:absolute;
+    right:0;
+    left:0;
+}
+
+/*red #FF8E7D*/
+.progress-bar-anger {
+  background-color: #FF8E7D;
+}
+
+/*orange #FFC36D*/
+.progress-bar-contempt {
+  background-color: #FFC36D;
+}
+
+/*yellow #FFDF67*/
+.progress-bar-happiness {
+  background-color: #FFDF67;
+}
+
+/*lime #A3D971*/
+.progress-bar-surprise {
+  background-color: #A3D971;
+}
+
+/*green #55BBA7*/
+.progress-bar-disgust {
+  background-color: #55BBA7;
+}
+
+/*purple #B490B6*/
+.progress-bar-fear {
+  background-color: #B490B6;
+}
+
+/*blue #80BBE7*/
+.progress-bar-sadness {
+  background-color: #80BBE7;
+}
+
+/*pink #F6B4C8*/
+.progress-bar-neutral {
+  background-color: #F6B4C8;
 }
