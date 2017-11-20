@@ -10,6 +10,10 @@ namespace ImageEmotions.Controllers
 {
     public class HomeController : Controller
     {
+
+        //irrelephant
+
+
         public static readonly HttpClient client = new HttpClient();
         private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
 
