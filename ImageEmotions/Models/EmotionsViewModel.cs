@@ -1,14 +1,16 @@
-﻿namespace ImageEmotions.Models
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Web;
+using Newtonsoft.Json.Linq;
+using System;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Linq;
+using ImageEmotions.Models;
+
+namespace ImageEmotions.ViewModels
 {
-    using System.Collections.Generic;
-    using System.Drawing;
-    using System.Web;
-    using Newtonsoft.Json.Linq;
-    using System;
-    using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.ObjectModel;
-    using System.Linq;
 
     public class EmotionsViewModel
     {
@@ -71,71 +73,10 @@
         {
             this.key = Key;
             this.value = Value;
-
-            //switch (Key)
-            //{
-            //    case "anger":
-            //        this.color = "danger";
-            //        break;
-            //    case "contempt":
-            //        this.color = "danger";
-            //        break;
-            //    case "disgust":
-            //        this.color = "danger";
-            //        break;
-            //    case "fear":
-            //        this.color = "danger";
-            //        break;
-            //    case "happiness":
-            //        this.color = "success";
-            //        break;
-            //    case "neutral":
-            //        this.color = "danger";
-            //        break;
-            //    case "sadness":
-            //        this.color = "danger";
-            //        break;
-            //    case "surprise":
-            //        this.color = "danger";
-            //        break;
-            //    default:
-            //        this.color = "primary";
-            //        break;
-            //}
         }
 
         public string key { get; set; }
         public double value { get; set; }
-
         public string color { get; set; }
-    }
-
-
-
-    //Generated
-    public class FaceRectangle
-    {
-        public int height { get; set; }
-        public int left { get; set; }
-        public int top { get; set; }
-        public int width { get; set; }
-    }
-
-    public class Scores
-    {
-        public double anger { get; set; }
-        public double contempt { get; set; }
-        public double disgust { get; set; }
-        public double fear { get; set; }
-        public double happiness { get; set; }
-        public double neutral { get; set; }
-        public double sadness { get; set; }
-        public double surprise { get; set; }
-    }
-
-    public class RootObject
-    {
-        public FaceRectangle faceRectangle { get; set; }
-        public Scores scores { get; set; }
     }
 }

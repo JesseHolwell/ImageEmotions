@@ -1,4 +1,6 @@
 ﻿using ImageEmotions.Models;
+using ImageEmotions.ViewModels;
+using System;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -10,10 +12,6 @@ namespace ImageEmotions.Controllers
 {
     public class HomeController : Controller
     {
-
-        //irrelephant
-
-
         public static readonly HttpClient client = new HttpClient();
         private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
 
@@ -28,20 +26,21 @@ namespace ImageEmotions.Controllers
 
             string results = "";
 
-            //try
-            //{
-            //if (file != null)
-            //    await Task.Run(() => ProcessImageAsync(file));
-            //else
-            //await Task.Run(() => ProcessUrlAsync(url));
+            try
+            {
+                //TODO: Support URLs
+                //if (file != null)
+                //    await Task.Run(() => ProcessImageAsync(file));
+                //else
+                //    await Task.Run(() => ProcessUrlAsync(url));
 
-            results = await Task.Run(() => ProcessImageAsync(file));
+                results = await Task.Run(() => ProcessImageAsync(file));
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    return View("Error", ex.Message as object);
-            //}
+            }
+            catch (Exception ex)
+            {
+                return View("Error", ex.Message as object);
+            }
 
             EmotionsViewModel vm = new EmotionsViewModel(results);
 
@@ -79,7 +78,6 @@ namespace ImageEmotions.Controllers
         //    content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
         //    myResponse = await client.PostAsync(uri, content);
         //    results = await myResponse.Content.ReadAsStringAsync();
-
         //}
     }
 }
