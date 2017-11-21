@@ -74,7 +74,7 @@ namespace ImageEmotions.Models
             this.Value = value;
         }
 
-        public string key { get; set; }
+        public string Key { get; set; }
         public double Value { get; set; }
         public string Color { get; set; }
     }
