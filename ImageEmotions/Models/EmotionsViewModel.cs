@@ -28,17 +28,17 @@ namespace ImageEmotions.ViewModels
 
                 model.Scores = new List<EmotionScore>()
                     {
-                        new EmotionScore("anger", emotion.scores.anger*100),
-                        new EmotionScore("contempt", emotion.scores.contempt*100),
-                        new EmotionScore("happiness", emotion.scores.happiness*100),
-                        new EmotionScore("surprise", emotion.scores.surprise*100),
-                        new EmotionScore("disgust", emotion.scores.disgust*100),
-                        new EmotionScore("fear", emotion.scores.fear*100),
-                        new EmotionScore("sadness", emotion.scores.sadness*100),
-                        new EmotionScore("neutral", emotion.scores.neutral*100)
+                        new EmotionScore("anger", emotion.Scores.Anger*100),
+                        new EmotionScore("contempt", emotion.Scores.Contempt*100),
+                        new EmotionScore("happiness", emotion.Scores.Happiness*100),
+                        new EmotionScore("surprise", emotion.Scores.Surprise*100),
+                        new EmotionScore("disgust", emotion.Scores.Disgust*100),
+                        new EmotionScore("fear", emotion.Scores.Fear*100),
+                        new EmotionScore("sadness", emotion.Scores.Sadness*100),
+                        new EmotionScore("neutral", emotion.Scores.Neutral*100)
                     };
-                model.Face = new Rectangle(emotion.faceRectangle.left, emotion.faceRectangle.top,
-                    emotion.faceRectangle.width, emotion.faceRectangle.height);
+                model.Face = new Rectangle(emotion.FaceRectangle.Left, emotion.FaceRectangle.Top,
+                    emotion.FaceRectangle.Width, emotion.FaceRectangle.Height);
 
             }
             catch (Exception ex)
@@ -69,14 +69,14 @@ namespace ImageEmotions.ViewModels
 
     public class EmotionScore
     {
-        public EmotionScore(string Key, double Value)
+        public EmotionScore(string key, double value)
         {
-            this.key = Key;
-            this.value = Value;
+            this.Key = key;
+            this.Value = value;
         }
 
-        public string key { get; set; }
-        public double value { get; set; }
-        public string color { get; set; }
+        public string Key { get; set; }
+        public double Value { get; set; }
+        public string Color { get; set; }
     }
 }

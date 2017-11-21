@@ -2,27 +2,27 @@
 {
     public class RootObject
     {
-        public FaceRectangle faceRectangle { get; set; }
-        public Scores scores { get; set; }
+        public FaceRectangle FaceRectangle { get; set; }
+        public Scores Scores { get; set; }
     }
 
     public class FaceRectangle
     {
-        public int height { get; set; }
-        public int left { get; set; }
-        public int top { get; set; }
-        public int width { get; set; }
+        public int Height { get; set; }
+        public int Left { get; set; }
+        public int Top { get; set; }
+        public int Width { get; set; }
     }
 
     public class Scores
     {
-        public double anger { get; set; }
-        public double contempt { get; set; }
-        public double disgust { get; set; }
-        public double fear { get; set; }
-        public double happiness { get; set; }
-        public double neutral { get; set; }
-        public double sadness { get; set; }
-        public double surprise { get; set; }
+        public double Anger { get; set; }
+        public double Contempt { get; set; }
+        public double Disgust { get; set; }
+        public double Fear { get; set; }
+        public double Happiness { get; set; }
+        public double Neutral { get; set; }
+        public double Sadness { get; set; }
+        public double Surprise { get; set; }
     }
 }
