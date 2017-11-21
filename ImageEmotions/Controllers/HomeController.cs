@@ -1,5 +1,4 @@
 ﻿using ImageEmotions.Models;
-using ImageEmotions.ViewModels;
 using System;
 using System.IO;
 using System.Net.Http;

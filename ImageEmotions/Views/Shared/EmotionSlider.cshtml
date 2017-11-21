@@ -5,8 +5,8 @@
 }
 
 <div class="form-group progress">
-    <span class="progress-value">@(Model.value.ToString("0.##"))% @(Model.key)</span>
-    <div class="progress-bar progress-bar-@(Model.key)" role="progressbar" aria-valuenow="@(Model.value)"
-         aria-valuemin="0" aria-valuemax="100" style="width:@(Model.value)%">
+    <span class="progress-value">@(Model.Value.ToString("0.##"))% @(Model.Key)</span>
+    <div class="progress-bar progress-bar-@(Model.Key)" role="progressbar" aria-valuenow="@(Model.Value)"
+         aria-valuemin="0" aria-valuemax="100" style="width:@(Model.Value)%">
     </div>
 </div>

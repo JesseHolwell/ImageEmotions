@@ -7,9 +7,8 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
-using ImageEmotions.Models;
 
-namespace ImageEmotions.ViewModels
+namespace ImageEmotions.Models
 {
 
     public class EmotionsViewModel
