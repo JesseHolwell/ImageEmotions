@@ -6,8 +6,10 @@ MVC wrapper around Microsoft's EmotionAPI that takes an image and returns the em
 Built as practice for interacting with and consuming REST API's
 Also utilizing some of the awesome Microsoft Cognitive Services available
 
-Code is stored here on Github 
+Code is stored here on Github
+
 Build and release is handled by VSTS
+
 Devops project on Azure links the code to the CI/CD pipeline
 
 
