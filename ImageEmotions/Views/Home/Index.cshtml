@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <h2>Image Emotions</h2>
-    <p class="lead">Upload, drag, or take a photo and submit</p>
+    @*<p class="lead">Upload, drag, or take a photo and submit</p>*@
 </div>
 
 @*<div class="form-group row">
@@ -22,16 +22,17 @@
         @*<div >You can drag an image file here</div>*@
         @*<label for="file" class="control-label col-md-2">Image:</label>*@
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" required />
+            <input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" />
         </div>
     </div>
 
     //TODO: Support URls
-    @*<div class="form-group row">
+    <div class="form-group row">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" required />
+            @*<input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" required />*@
+            <input type="url" name="url" id="url" class="form-control"/>
         </div>
-    </div>*@
+    </div>
 
     <div class="form-group row">
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
@@ -72,4 +73,5 @@
 
         e.dataTransfer.dropEffect = 'copy';
     });
+
 </script>
