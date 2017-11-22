@@ -4,6 +4,7 @@
 MVC wrapper around Microsoft's EmotionAPI that takes an image and returns the emotions detected in the image
 
 Built as practice for interacting with and consuming REST API's
+
 Also utilizing some of the awesome Microsoft Cognitive Services available
 
 Code is stored here on Github
