@@ -12,6 +12,7 @@ namespace ImageEmotions.Controllers
 {
     public class HomeController : Controller
     {
+        //irrelephant
         private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
         private static Uri formaturi = new Uri(uri);
 
