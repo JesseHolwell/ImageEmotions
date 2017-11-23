@@ -34,7 +34,7 @@ namespace ImageEmotions.Controllers
                 else
                     await Task.Run(() => ProcessUrlAsync(url));
 
-                results = await Task.Run(() => ProcessImageAsync(file));
+                //results = await Task.Run(() => ProcessImageAsync(file));
 
             }
             catch (Exception ex)
