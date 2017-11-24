@@ -13,8 +13,9 @@ namespace ImageEmotions.Controllers
     public class HomeController : Controller
     {
         //irrelephant
-        private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
+        private static string uri = "http://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
         private static Uri formaturi = new Uri(uri);
+        private static readonly HttpClient client = new HttpClient();
 
         public ActionResult Index()
         {
@@ -31,9 +32,9 @@ namespace ImageEmotions.Controllers
             {
                 //TODO: Support URLs
                 if (file != null)
-                    await Task.Run(() => ProcessImageAsync(file));
+                    results = await Task.Run(() => ProcessImageAsync(file));
                 else
-                    await Task.Run(() => ProcessUrlAsync(url));
+                    results = await Task.Run(() => ProcessUrlAsync(url));
 
                 //results = await Task.Run(() => ProcessImageAsync(file));
 
@@ -60,14 +61,15 @@ namespace ImageEmotions.Controllers
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-                using (var client = new HttpClient())
+                ServicePointManager.Expect100Continue = false;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+                //client.DefaultRequestHeaders.ExpectContinue = false;
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "e39efb06499b4fa988f354e3d43e7834");
+                using (var myResponse = await client.PostAsync(uri, content))
                 {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "e39efb06499b4fa988f354e3d43e7834");
-                    using (var myResponse = await client.PostAsync(formaturi, content))
-                    {
-                        var results = await myResponse.Content.ReadAsStringAsync();
-                        return results;
-                    }
+                    var results = await myResponse.Content.ReadAsStringAsync();
+                    return results;
                 }
             }
         }
@@ -79,15 +81,13 @@ namespace ImageEmotions.Controllers
             //{
             var content = new StringContent(@"{'url': 'https://res.cloudinary.com/demo/image/upload/w_400/woman.jpg' }");
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                using (var client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "e39efb06499b4fa988f354e3d43e7834");
-                    using (var myResponse = await client.PostAsync(formaturi, content))
-                    {
-                        var results = await myResponse.Content.ReadAsStringAsync();
-                        return results;
-                    }
-                }
+            //using (var client = new HttpClient())
+            client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "e39efb06499b4fa988f354e3d43e7834");
+            using (var myResponse = await client.PostAsync(formaturi, content))
+            {
+                var results = await myResponse.Content.ReadAsStringAsync();
+                return results;
+            }
             //}
         }
     }
