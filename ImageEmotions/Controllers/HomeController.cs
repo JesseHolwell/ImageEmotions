@@ -60,7 +60,7 @@ namespace ImageEmotions.Controllers
 
                 using (var client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "e39efb06499b4fa988f354e3d43e7834");
+                    client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "9d50196588bd4444ad9c23dd452f772c");
                     using (var myResponse = await client.PostAsync(uri, content))
                     {
                         var results = await myResponse.Content.ReadAsStringAsync();
