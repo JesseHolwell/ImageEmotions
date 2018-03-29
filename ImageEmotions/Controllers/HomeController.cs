@@ -12,7 +12,7 @@ namespace ImageEmotions.Controllers
     public class HomeController : Controller
     {
         public static readonly HttpClient client = new HttpClient();
-        private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize/";
+        private static string uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
 
         public ActionResult Index()
         {
@@ -88,7 +88,7 @@ namespace ImageEmotions.Controllers
             //process byte data
             using (var content = new ByteArrayContent(byteData))
             {
-                content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
                 using (var client = new HttpClient())
                 {
