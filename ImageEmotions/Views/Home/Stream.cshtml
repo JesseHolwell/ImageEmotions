@@ -1,0 +1,282 @@
+﻿@{
+    ViewBag.Title = "Image";
+}
+
+@model ImageEmotions.Models.EmotionsViewModel
+<script src="~/Scripts/highcharts.js"></script>
+
+<style>
+
+    /*TODO: clean up alignment and size*/
+    #container {
+        margin: 0px auto;
+        width: 100%;
+        height: 375px;
+        border: 10px #333 solid;
+    }
+
+    #sliding-container {
+        margin: 0px auto;
+        width: 100%;
+        height: 375px;
+        border: 10px #333 solid;
+    }
+
+    #videoElement {
+        width: 100;
+        height: 100px;
+        background-color: #666;
+    }
+
+    canvas {
+        width: 100%;
+        height: 100px;
+    }
+</style>
+
+<div class="jumbotron">
+    <div class="row">
+        <div class="col-xs-9">
+            <div id="container">
+                <video autoplay="true" id="videoElement"></video>
+            </div>
+        </div>
+        <div class="col-xs-3">
+            <div id="sliding-container">
+                <canvas id="grabFrameCanvas"></canvas>
+                <canvas id="canvas1"></canvas>
+                <canvas id="canvas2"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</div>
+
+<script>
+
+    var emotions = [
+        {
+            "index": "0",
+            "name": "happiness",
+            "colour": "0xf00",
+        },
+        {
+            "index": "1",
+            "name": "sadness",
+            "colour": "0x0f0",
+        },
+        {
+            "index": "2",
+            "name": "anger",
+            "colour": "0x00f",
+        }
+    ]
+
+@* Webcam *@
+    var imageCapture;
+
+    //Init
+    function getUserMedia() {
+        navigator.mediaDevices.getUserMedia({ video: true })
+            .then(mediaStream => {
+                document.querySelector('video').srcObject = mediaStream;
+
+                const track = mediaStream.getVideoTracks()[0];
+                imageCapture = new ImageCapture(track);
+            })
+            .catch(error => console.log(error));
+    }
+    getUserMedia();
+
+    //Action
+    function grabFrame() {
+        if (imageCapture) {
+            imageCapture.grabFrame()
+                .then(imageBitmap => {
+                    updateAllCanvas(imageBitmap);
+                    submitFrame();
+                })
+                .catch(error => console.log(error));
+        }
+    }
+
+    //Display
+    function drawCanvas(canvas, img) {
+
+        //TODO: clean up alignment and size
+        canvas.width = getComputedStyle(canvas).width.split('px')[0];
+        canvas.height = getComputedStyle(canvas).height.split('px')[0];
+        let ratio = Math.min(canvas.width / img.width, canvas.height / img.height);
+        let x = (canvas.width - img.width * ratio) / 2;
+        let y = (canvas.height - img.height * ratio) / 2;
+        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+        canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height,
+            x, y, img.width * ratio, img.height * ratio);
+    }
+
+    function updateAllCanvas(imageBitmap) {
+
+        var mainCanvas = document.querySelector('#grabFrameCanvas');
+        var canvas1 = document.querySelector('#canvas1');
+        var canvas2 = document.querySelector('#canvas2');
+
+        drawCanvas(canvas2, canvas1)
+        drawCanvas(canvas1, mainCanvas)
+        drawCanvas(mainCanvas, imageBitmap)
+    }
+
+
+@* Image stream *@
+
+    function breathe() {
+        grabFrame();
+
+        //on response, update chart
+
+        function updateSeries() {
+            for (i = 0; i < chart.series.length; i++) {
+                // set up the updating of the chart each second
+                var line = chart.series[i];
+                var x = (new Date()).getTime(), // current time
+                    y = Math.random();
+                line.addPoint([x, y], false, true, true);
+            }
+            chart.redraw()
+        }
+
+    }
+
+    function submitFrame() {
+
+        //var image = $("#grabFrameCanvas").getContext();
+        var image = $("#grabFrameCanvas")[0].toDataURL('image/png', 0.7)
+        //image = image.replace('data:image/png;base64,', '');
+        
+
+        var formData = new FormData();
+        formData.append("image", image);
+
+        //var formData = {
+        //    file : image,
+        //}
+
+
+        request = $.ajax({
+            type: "POST",
+            url: '@Url.RouteUrl(new { controller = "Home", action = "SubmitFromCanvas" })',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                if (result != null && result.success != null) {
+                    // Do nothing - the txt file handles error/success reporting
+                    console.log("waddup")
+                }
+            },
+            error: function () {
+                console.log("doh")
+            }
+        });
+    }
+
+    //set timer
+    setInterval(breathe, 10000)
+
+
+
+@* Highcharts *@
+
+    Highcharts.setOptions({
+        global: {
+            useUTC: false
+        }
+    });
+
+    var chart = Highcharts.chart('chart', {
+        chart: {
+            type: 'spline',
+            animation: Highcharts.svg, // don't animate in old IE
+            marginRight: 10,
+            events: {
+                load: function () {
+
+                    setInterval(updateSeries, 1000);
+                }
+            }
+        },
+        title: {
+            text: 'stream'
+        },
+        xAxis: {
+            type: 'datetime',
+            tickPixelInterval: 150
+        },
+        yAxis: {
+            title: {
+                text: 'Value'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.series.name + '</b><br/>' +
+                    Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
+                    Highcharts.numberFormat(this.y, 2);
+            }
+        },
+        legend: {
+            enabled: true
+        },
+        exporting: {
+            enabled: false
+        },
+        series: getMultipleRandomSeries()
+    });
+
+//Highcharts data
+    function updateSeries() {
+        for (i = 0; i < chart.series.length; i++) {
+            // set up the updating of the chart each second
+            var line = chart.series[i];
+            var x = (new Date()).getTime(), // current time
+                y = Math.random();
+            line.addPoint([x, y], false, true, true);
+        }
+        chart.redraw()
+    }
+
+    function getMultipleRandomSeries() {
+        var series = [];
+        for (i = 0; i < 6; i++)
+            series.push(getRandomSeries(i));
+        return series;
+    }
+
+    function getRandomSeries(i) {
+        return {
+            name: 'Random data ' + i,
+            data: (function () {
+                // generate an array of random data
+                var data = [],
+                    time = (new Date()).getTime(),
+                    i;
+
+                for (i = -19; i <= 0; i += 1) {
+                    data.push({
+                        x: time + i * 1000,
+                        y: Math.random()
+                    });
+                }
+                return data;
+            }())
+        }
+    }
+</script>

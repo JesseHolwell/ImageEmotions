@@ -15,14 +15,14 @@
     </div>
 </div>*@
 
-@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-group row" id="target">
         @*<div >You can drag an image file here</div>*@
         @*<label for="file" class="control-label col-md-2">Image:</label>*@
         <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" required />
+            <input type="file" name="file" id="file" class="form-control" accept="image/*" required />
         </div>
     </div>
 

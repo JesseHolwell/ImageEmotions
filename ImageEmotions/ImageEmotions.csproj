@@ -176,6 +176,7 @@
     </Content>
     <Content Include="Connected Services\Application Insights\ConnectedService.json" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\highcharts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -200,6 +201,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\EmotionSlider.cshtml" />
     <Content Include="Views\Home\Results.cshtml" />
+    <Content Include="Views\Home\Stream.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
