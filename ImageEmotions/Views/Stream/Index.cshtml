@@ -29,7 +29,12 @@
         background-color: #666;
     }
 
-    canvas {
+    #grabFrameCanvas {
+        visibility: hidden;
+        height:300px;
+    }
+
+    #canvas1, #canvas2, #canvas3 {
         width: 100%;
         height: 100px;
     }
@@ -44,9 +49,10 @@
         </div>
         <div class="col-md-3 col-xs-12">
             <div id="sliding-container">
-                <canvas id="grabFrameCanvas"></canvas>
                 <canvas id="canvas1"></canvas>
                 <canvas id="canvas2"></canvas>
+                <canvas id="canvas3"></canvas>
+                <canvas id="grabFrameCanvas"></canvas>
             </div>
         </div>
     </div>
@@ -62,31 +68,49 @@
 
 @* Settings *@
 
-    const emotions = [
+    const emotionParams = [
         {
-            "index": "0",
-            "name": "happiness",
+            "name": "anger",
+            "colour": "0xf0f",
+        },
+        {
+            "name": "contempt",
+            "colour": "0x888",
+        },
+        {
+            "name": "disgust",
+            "colour": "0xfff",
+        },
+        {
+            "name": "fear",
             "colour": "0xf00",
         },
         {
-            "index": "1",
-            "name": "sadness",
+            "name": "happiness",
+            "colour": "0xff0",
+        },
+        {
+            "name": "neutral",
             "colour": "0x0f0",
         },
         {
-            "index": "2",
-            "name": "anger",
+            "name": "sadness",
+            "colour": "0x0ff",
+        },
+        {
+            "name": "surprise",
             "colour": "0x00f",
-        }
+        },
     ]
 
     const tickRate = 5000;
     const pointsOnChart = 10;
 
 @* Webcam *@
+
     var imageCapture;
 
-    //Init
+    //Init camera
     function getUserMedia() {
         navigator.mediaDevices.getUserMedia({ video: true })
             .then(mediaStream => {
@@ -99,31 +123,33 @@
     }
     getUserMedia();
 
-    //Action
+    //Grab frame from webcam stream
     function grabFrame() {
         if (imageCapture) {
             imageCapture.grabFrame()
                 .then(imageBitmap => {
-                    slideCanvasImages(imageBitmap);
-                    submitFrame();
+                    insertCanvasImages(imageBitmap);
+                    submitFrameForAnalysis();
                 })
                 .catch(error => console.log(error));
         }
     }
 
-    //Slide
-    function slideCanvasImages(imageBitmap) {
+    //Insert and slide images down
+    function insertCanvasImages(imageBitmap) {
 
         var mainCanvas = document.querySelector('#grabFrameCanvas');
         var canvas1 = document.querySelector('#canvas1');
         var canvas2 = document.querySelector('#canvas2');
+        var canvas3 = document.querySelector('#canvas3');
 
+        drawCanvas(canvas3, canvas2)
         drawCanvas(canvas2, canvas1)
-        drawCanvas(canvas1, mainCanvas)
+        drawCanvas(canvas1, imageBitmap)
         drawCanvas(mainCanvas, imageBitmap)
     }
 
-    //Display
+    //Display image on canvas
     function drawCanvas(canvas, img) {
 
         //TODO: clean up alignment and size
@@ -148,14 +174,14 @@
 
     }
 
-    function submitFrame() {
+    function submitFrameForAnalysis() {
 
-        var image = $("#grabFrameCanvas")[0].toDataURL('image/png')
+        var image = $("#grabFrameCanvas")[0].toDataURL('image/png', 1.0)
         image = image.replace('data:image/png;base64,', '');
 
         var formData = new FormData();
         formData.append("image", image);
-        
+
         request = $.ajax({
             type: "POST",
             url: '@Url.RouteUrl(new { controller = "Stream", action = "SubmitImage" })',
@@ -167,6 +193,8 @@
                 if (result != null && result.success != null) {
                     // Do nothing - the txt file handles error/success reporting
                     console.log("waddup")
+
+                    updateSeriesWithResults(result.result)
                 }
             },
             error: function (error) {
@@ -196,7 +224,7 @@
             events: {
                 load: function () {
 
-                    setInterval(updateSeries, tickRate);
+                    //setInterval(updateSeries, tickRate);
                 }
             }
         },
@@ -245,17 +273,37 @@
         chart.redraw()
     }
 
+    function updateSeriesWithResults(results) {
+
+        var scores = [0,0,0,0,0,0,0,0]
+        if (results != "[]") {
+            var scores = JSON.parse(results)[0].scores;
+        }
+
+        var x = (new Date()).getTime() // current time
+
+        for (i = 0; i < chart.series.length; i++) {
+            // set up the updating of the chart each second
+            var line = chart.series[i];
+            var y = scores[chart.series[i].name]
+            line.addPoint([x, y], true, true, true);
+        }
+        chart.redraw()
+    }
+
     function getMultipleRandomSeries() {
         var series = [];
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < 8; i++)
             series.push(getRandomSeries(i));
         return series;
     }
 
     function getRandomSeries(i) {
         return {
-            name: 'Random data ' + i,
-            data: (function () {
+            name: emotionParams[i].name,
+                //'Random data ' + i,
+            data: 
+            (function () {
                 // generate an array of random data
                 var data = [],
                     time = (new Date()).getTime(),
@@ -264,8 +312,8 @@
                 //TODO: use pointsOnChart and tickRate
                 for (i = -9; i <= 0; i += 1) {
                     data.push({
-                        x: time + i * 1000,
-                        y: Math.random()
+                        x: time,
+                        y: 0
                     });
                 }
                 return data;
