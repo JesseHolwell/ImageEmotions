@@ -1,4 +1,5 @@
 ﻿using ImageEmotions.Models;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -72,6 +73,13 @@ namespace ImageEmotions.Controllers
 
             return Json(new { success = true, result = results });
 
+        }
+
+        static byte[] GetImageAsByteArray(string imageFilePath)
+        {
+            FileStream fileStream = new FileStream(imageFilePath, FileMode.Open, FileAccess.Read);
+            BinaryReader binaryReader = new BinaryReader(fileStream);
+            return binaryReader.ReadBytes((int)fileStream.Length);
         }
 
         public async Task<string> ProcessImageAsync(HttpPostedFileBase file)

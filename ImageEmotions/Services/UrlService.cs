@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ImageEmotions.Services
 {
-    public class CognitiveService
+    public class UrlService
     {
     }
 }

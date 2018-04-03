@@ -23,8 +23,9 @@
     }
 
     #videoElement {
+        /*height: 365px;*/
+        height: 100px;
         width: 100;
-        height: 365px;
         background-color: #666;
     }
 
@@ -36,12 +37,12 @@
 
 <div class="jumbotron">
     <div class="row">
-        <div class="col-xs-9">
+        <div class="col-md-9 col-xs-3">
             <div id="container">
                 <video autoplay="true" id="videoElement"></video>
             </div>
         </div>
-        <div class="col-xs-3">
+        <div class="col-md-3 col-xs-12">
             <div id="sliding-container">
                 <canvas id="grabFrameCanvas"></canvas>
                 <canvas id="canvas1"></canvas>
@@ -53,11 +54,15 @@
     <br />
 
     <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <input class="btn btn-primary" id="tick" type="button" value="Tick"/>
 </div>
 
 <script>
 
-    var emotions = [
+@*Settings*@
+
+    const emotions = [
         {
             "index": "0",
             "name": "happiness",
@@ -74,6 +79,9 @@
             "colour": "0x00f",
         }
     ]
+
+    const tickRate = 5000;
+    const pointsOnChart = 10;
 
 @* Webcam *@
     var imageCapture;
@@ -134,18 +142,7 @@
     function breathe() {
         grabFrame();
 
-        //on response, update chart
-
-        function updateSeries() {
-            for (i = 0; i < chart.series.length; i++) {
-                // set up the updating of the chart each second
-                var line = chart.series[i];
-                var x = (new Date()).getTime(), // current time
-                    y = Math.random();
-                line.addPoint([x, y], false, true, true);
-            }
-            chart.redraw()
-        }
+        //TOOD: on response, update chart
 
     }
 
@@ -177,14 +174,14 @@
                     console.log("waddup")
                 }
             },
-            error: function () {
-                console.log("doh")
+            error: function (error) {
+                console.log("doh: " + error)
             }
         });
     }
 
-    //set timer
-    setInterval(breathe, 10000)
+    //TODO: set on timer
+    //setInterval(breathe, tickRate)
 
 
 
@@ -204,7 +201,7 @@
             events: {
                 load: function () {
 
-                    setInterval(updateSeries, 1000);
+                    setInterval(updateSeries, tickRate);
                 }
             }
         },
@@ -269,7 +266,8 @@
                     time = (new Date()).getTime(),
                     i;
 
-                for (i = -19; i <= 0; i += 1) {
+                //TODO: use pointsOnChart and tickRate
+                for (i = -9; i <= 0; i += 1) {
                     data.push({
                         x: time + i * 1000,
                         y: Math.random()
@@ -279,4 +277,10 @@
             }())
         }
     }
+
+    $(function() {
+        $("#tick").on("click", function () {
+            breathe();
+        })
+    })
 </script>
