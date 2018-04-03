@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Web;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using System;
-using Newtonsoft.Json;
-using System.Collections;
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace ImageEmotions.Models
@@ -20,8 +16,9 @@ namespace ImageEmotions.Models
             try
             {
 
-                RootObject[] obj = JsonConvert.DeserializeObject<RootObject[]>(Json);
+                EmotionsMatrix[] obj = JsonConvert.DeserializeObject<EmotionsMatrix[]>(Json);
 
+                //TODO: support multiple responses
                 //foreach (var emotion in obj)
                 var emotion = obj.FirstOrDefault();
 
@@ -42,7 +39,6 @@ namespace ImageEmotions.Models
             }
             catch (Exception ex)
             {
-                //System.Diagnostics.Debugger.Break();
                 Console.WriteLine(ex.Message);
             }
 

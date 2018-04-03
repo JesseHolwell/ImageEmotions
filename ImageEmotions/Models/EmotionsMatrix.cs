@@ -1,6 +1,6 @@
 ﻿namespace ImageEmotions.Models
 {
-    public class RootObject
+    public class EmotionsMatrix
     {
         public FaceRectangle FaceRectangle { get; set; }
         public Scores Scores { get; set; }
