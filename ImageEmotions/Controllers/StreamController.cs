@@ -2,12 +2,11 @@
 using ImageEmotions.Services;
 using System;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ImageEmotions.Controllers
 {
-    public class HomeController : Controller
+    public class StreamController : Controller
     {
 
         public ActionResult Index()
@@ -16,13 +15,18 @@ namespace ImageEmotions.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SubmitFile(HttpPostedFileBase file)
+        public async Task<ActionResult> SubmitImage(string image)
         {
             string results = "";
 
+            string strData = image.Substring("data:image/png;base64,".Length);
+            byte[] data = Convert.FromBase64String(strData);
+
+            //var data = image;
+
             try
             {
-                results = await Task.Run(() => FileService.ProcessFileAsync(file));
+                results = await ImageService.ProcessImageAsync(data);
             }
             catch (Exception ex)
             {
@@ -31,12 +35,8 @@ namespace ImageEmotions.Controllers
 
             EmotionsViewModel vm = new EmotionsViewModel(results);
 
-            return View("Results", vm);
+            return Json(new { success = true, result = results });
 
         }
-
-        //TODO: submit Url
-        //[HttpPost]
-        //public async Task<ActionResult> SubmitUrl(string url)
     }
 }

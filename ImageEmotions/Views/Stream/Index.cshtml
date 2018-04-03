@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Image";
+    ViewBag.Title = "Stream";
 }
 
 @model ImageEmotions.Models.EmotionsViewModel
@@ -60,7 +60,7 @@
 
 <script>
 
-@*Settings*@
+@* Settings *@
 
     const emotions = [
         {
@@ -149,8 +149,16 @@
     function submitFrame() {
 
         //var image = $("#grabFrameCanvas").getContext();
-        var image = $("#grabFrameCanvas")[0].toDataURL('image/png', 0.7)
+        var image = $("#grabFrameCanvas")[0].toDataURL('application/octet-stream', 0.7)
         //image = image.replace('data:image/png;base64,', '');
+
+
+        //var canvas = document.getElementById('grabFrameCanvas');
+        //var ctx = canvas.getContext('2d');
+        //ctx.rect(10, 10, 100, 100);
+        //ctx.fill();
+
+        //var image = ctx.getImageData(50, 50, 100, 100);
         
 
         var formData = new FormData();
@@ -163,7 +171,7 @@
 
         request = $.ajax({
             type: "POST",
-            url: '@Url.RouteUrl(new { controller = "Home", action = "SubmitFromCanvas" })',
+            url: '@Url.RouteUrl(new { controller = "Stream", action = "SubmitImage" })',
             data: formData,
             dataType: 'json',
             contentType: false,
@@ -238,7 +246,7 @@
         series: getMultipleRandomSeries()
     });
 
-//Highcharts data
+@* Highcharts *@
     function updateSeries() {
         for (i = 0; i < chart.series.length; i++) {
             // set up the updating of the chart each second
@@ -278,6 +286,7 @@
         }
     }
 
+@* Page Events *@
     $(function() {
         $("#tick").on("click", function () {
             breathe();

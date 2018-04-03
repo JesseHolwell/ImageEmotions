@@ -153,6 +153,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\StreamController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="ErrorHandler\AiHandleErrorAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -205,7 +206,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\EmotionSlider.cshtml" />
     <Content Include="Views\Home\Results.cshtml" />
-    <Content Include="Views\Home\Stream.cshtml" />
+    <Content Include="Views\Stream\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,7 +15,7 @@
     </div>
 </div>*@
 
-@using (Html.BeginForm("Submit", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SubmitFile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-group row" id="target">

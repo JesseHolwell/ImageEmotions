@@ -31,7 +31,7 @@
             <span class="icon-bar"></span>
         </button>*@
                 @Html.ActionLink("Emotion Detector", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Emotion Stream", "Stream", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Emotion Stream", "Index", "Stream", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             @*<div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -42,6 +42,8 @@
     </div>
     <div class="container body-content">
         @RenderBody()
+
+        @*TODO: footer formatting*@
         <hr />
         <footer>
             <p>Made with &lt;3 by <a href="https://github.com/JesseHolwell/ImageEmotions">Jesse</a></p>
