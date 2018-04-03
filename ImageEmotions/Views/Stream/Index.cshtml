@@ -5,44 +5,9 @@
 @model ImageEmotions.Models.EmotionsViewModel
 <script src="~/Scripts/highcharts.js"></script>
 
-<style>
-
-    /*TODO: clean up alignment and size*/
-    #container {
-        margin: 0px auto;
-        width: 100%;
-        height: 375px;
-        border: 10px #333 solid;
-    }
-
-    #sliding-container {
-        margin: 0px auto;
-        width: 100%;
-        height: 375px;
-        border: 10px #333 solid;
-    }
-
-    #videoElement {
-        /*height: 365px;*/
-        height: 365px;
-        width: 100;
-        background-color: #666;
-    }
-
-    #grabFrameCanvas {
-        visibility: hidden;
-        height:300px;
-    }
-
-    #canvas1, #canvas2, #canvas3 {
-        width: 100%;
-        height: 100px;
-    }
-</style>
-
 <div class="jumbotron">
     <div class="row">
-        <div class="col-md-9 col-xs-3">
+        <div class="col-md-9 col-xs-12">
             <div id="container">
                 <video autoplay="true" id="videoElement"></video>
             </div>
@@ -57,11 +22,9 @@
         </div>
     </div>
 
-    <br />
-
     <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-    <input class="btn btn-primary" id="tick" type="button" value="Tick" />
+    @*<input class="btn btn-primary" id="tick" type="button" value="Tick" />*@
 </div>
 
 <script>
@@ -167,13 +130,6 @@
 
 @* Image stream *@
 
-    function breathe() {
-        grabFrame();
-
-        //TOOD: on response, update chart
-
-    }
-
     function submitFrameForAnalysis() {
 
         var image = $("#grabFrameCanvas")[0].toDataURL('image/png', 1.0)
@@ -191,9 +147,7 @@
             processData: false,
             success: function (result) {
                 if (result != null && result.success != null) {
-                    // Do nothing - the txt file handles error/success reporting
                     console.log("waddup")
-
                     updateSeriesWithResults(result.result)
                 }
             },
@@ -203,9 +157,8 @@
         });
     }
 
-    //TODO: set on timer
-    //setInterval(breathe, tickRate)
-
+    //set main loop
+    setInterval(grabFrame, tickRate)
 
 
 @* Highcharts *@
@@ -220,13 +173,7 @@
         chart: {
             type: 'spline',
             animation: Highcharts.svg, // don't animate in old IE
-            marginRight: 10,
-            events: {
-                load: function () {
-
-                    //setInterval(updateSeries, tickRate);
-                }
-            }
+            marginRight: 10
         },
         title: {
             text: 'stream'
@@ -261,7 +208,9 @@
         series: getMultipleRandomSeries()
     });
 
-@* Highcharts *@
+@* Chart data *@
+
+    //update series with random data
     function updateSeries() {
         for (i = 0; i < chart.series.length; i++) {
             // set up the updating of the chart each second
@@ -273,6 +222,7 @@
         chart.redraw()
     }
 
+    //Update series with response results
     function updateSeriesWithResults(results) {
 
         var scores = [0,0,0,0,0,0,0,0]
@@ -283,7 +233,6 @@
         var x = (new Date()).getTime() // current time
 
         for (i = 0; i < chart.series.length; i++) {
-            // set up the updating of the chart each second
             var line = chart.series[i];
             var y = scores[chart.series[i].name]
             line.addPoint([x, y], true, true, true);
@@ -291,26 +240,25 @@
         chart.redraw()
     }
 
+    //populate each series
     function getMultipleRandomSeries() {
         var series = [];
-        for (i = 0; i < 8; i++)
+        for (i = 0; i < emotionParams.length; i++)
             series.push(getRandomSeries(i));
         return series;
     }
 
+    //initialise series
     function getRandomSeries(i) {
         return {
             name: emotionParams[i].name,
-                //'Random data ' + i,
-            data: 
+            data:
             (function () {
-                // generate an array of random data
                 var data = [],
                     time = (new Date()).getTime(),
                     i;
 
-                //TODO: use pointsOnChart and tickRate
-                for (i = -9; i <= 0; i += 1) {
+                    for (i = -emotionParams.length; i <= 0; i += 1) {
                     data.push({
                         x: time,
                         y: 0
@@ -322,9 +270,9 @@
     }
 
 @* Page Events *@
-    $(function() {
-        $("#tick").on("click", function () {
-            breathe();
-        })
-    })
+    //$(function() {
+    //    $("#tick").on("click", function () {
+    //        breathe();
+    //    })
+    //})
 </script>
