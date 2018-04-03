@@ -1,7 +1,9 @@
 ﻿using ImageEmotions.Models;
 using ImageEmotions.Services;
 using System;
+using System.IO;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace ImageEmotions.Controllers
@@ -19,14 +21,11 @@ namespace ImageEmotions.Controllers
         {
             string results = "";
 
-            string strData = image.Substring("data:image/png;base64,".Length);
-            byte[] data = Convert.FromBase64String(strData);
-
-            //var data = image;
-
             try
             {
-                results = await ImageService.ProcessImageAsync(data);
+                var imageData = Convert.FromBase64String(image);
+
+                results = await Task.Run(() => ImageService.ProcessImageAsync(imageData));
             }
             catch (Exception ex)
             {

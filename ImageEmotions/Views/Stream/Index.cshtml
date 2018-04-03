@@ -24,7 +24,7 @@
 
     #videoElement {
         /*height: 365px;*/
-        height: 100px;
+        height: 365px;
         width: 100;
         background-color: #666;
     }
@@ -55,7 +55,7 @@
 
     <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-    <input class="btn btn-primary" id="tick" type="button" value="Tick"/>
+    <input class="btn btn-primary" id="tick" type="button" value="Tick" />
 </div>
 
 <script>
@@ -104,11 +104,23 @@
         if (imageCapture) {
             imageCapture.grabFrame()
                 .then(imageBitmap => {
-                    updateAllCanvas(imageBitmap);
+                    slideCanvasImages(imageBitmap);
                     submitFrame();
                 })
                 .catch(error => console.log(error));
         }
+    }
+
+    //Slide
+    function slideCanvasImages(imageBitmap) {
+
+        var mainCanvas = document.querySelector('#grabFrameCanvas');
+        var canvas1 = document.querySelector('#canvas1');
+        var canvas2 = document.querySelector('#canvas2');
+
+        drawCanvas(canvas2, canvas1)
+        drawCanvas(canvas1, mainCanvas)
+        drawCanvas(mainCanvas, imageBitmap)
     }
 
     //Display
@@ -125,16 +137,6 @@
             x, y, img.width * ratio, img.height * ratio);
     }
 
-    function updateAllCanvas(imageBitmap) {
-
-        var mainCanvas = document.querySelector('#grabFrameCanvas');
-        var canvas1 = document.querySelector('#canvas1');
-        var canvas2 = document.querySelector('#canvas2');
-
-        drawCanvas(canvas2, canvas1)
-        drawCanvas(canvas1, mainCanvas)
-        drawCanvas(mainCanvas, imageBitmap)
-    }
 
 
 @* Image stream *@
@@ -148,27 +150,12 @@
 
     function submitFrame() {
 
-        //var image = $("#grabFrameCanvas").getContext();
-        var image = $("#grabFrameCanvas")[0].toDataURL('application/octet-stream', 0.7)
-        //image = image.replace('data:image/png;base64,', '');
-
-
-        //var canvas = document.getElementById('grabFrameCanvas');
-        //var ctx = canvas.getContext('2d');
-        //ctx.rect(10, 10, 100, 100);
-        //ctx.fill();
-
-        //var image = ctx.getImageData(50, 50, 100, 100);
-        
+        var image = $("#grabFrameCanvas")[0].toDataURL('image/png')
+        image = image.replace('data:image/png;base64,', '');
 
         var formData = new FormData();
         formData.append("image", image);
-
-        //var formData = {
-        //    file : image,
-        //}
-
-
+        
         request = $.ajax({
             type: "POST",
             url: '@Url.RouteUrl(new { controller = "Stream", action = "SubmitImage" })',
