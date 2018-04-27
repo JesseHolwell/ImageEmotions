@@ -6,7 +6,7 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
     background-image: url('../Images/68515732-emotional-wallpapers.jpg');
-    background-repeat: no-repeat;
+    
     background-size: 100% 100%;
 }
 
@@ -25,11 +25,11 @@ footer {
     bottom: 0;
     left: 15px;
     right: 0;
-    color:white;
+    color: white;
 }
 
 #submit {
-    margin-top:20px;
+    margin-top: 20px;
 }
 
 footer a {
@@ -40,15 +40,15 @@ footer a {
     background-color: #00000000;
     color: white;
     padding-top: 0px;
-    padding-bottom:0px;
+    padding-bottom: 0px;
 }
 
 #results {
-    color:white;
+    color: white;
 }
 
 #buttons {
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 .jumbotron h2 {
@@ -57,9 +57,13 @@ footer a {
 }
 
 .or-text {
-    color:white;
-    font-size:24px;
+    color: goldenrod;
+    font-size: 24px;
     font-weight: bold;
+}
+
+.help-block {
+    color: orangered;
 }
 /*progress bars value align center */
 .progress {
@@ -73,8 +77,16 @@ footer a {
 }
 
 .progress-bars {
-    color:#333;
+    color: #333;
 }
+
+.btn-file, #text {
+    border: solid 2px;
+}
+
+    .btn-file.success, #text.success {
+        color: #ff3600;
+    }
 
 /*red #FF8E7D*/
 .progress-bar-anger {
@@ -154,12 +166,12 @@ video {
 }
 
 
-/*@media*/ 
+/*@media*/
 
 .btn-file {
-    width:100%;
+    width: 100%;
 }
 
 #file {
-    width:100%
+    width: 100%
 }

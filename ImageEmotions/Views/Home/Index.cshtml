@@ -36,6 +36,7 @@
         <div class="form-group row">
             <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
                 <input type="button" id="submit" class="btn btn-success form-control" value="Submit" />
+                <span class="help-block hidden">No image found</span>
             </div>
         </div>
     </form>
@@ -45,25 +46,47 @@
 @* Image Submit *@
 <script type="text/javascript">
 
+    var url = "@Url.Action("SubmitFile", "Home")";
+
     $(function () {
+
+        $("#file").on("click", function () {
+            $("#text").removeClass("success");
+            $(".btn-file").addClass("success");
+            $(".help-block").addClass("hidden");
+            //$("#text").val("");
+        })
+
+        $("#text").on("focus", function () {
+            $(".btn-file").removeClass("success");
+            $("#text").addClass("success");
+            //$("#file")[0].files = null;
+
+            //todo: if cancel - reverse it
+        })
 
         $("#submit").click(function (e) {
 
-            var url = "@Url.Action("SubmitFile", "Home")";
-            //var data = $('#file')[0];
-            var file = new FormData($('form').get(0));
+            if ($("#file")[0].files.length > 0) {
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: file,
-                cache: false,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    $("#results").html(data.view);
-                }
-            })
+                $(".help-block").addClass("hidden");
+                var file = new FormData($('form').get(0));
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: file,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        $("#results").html(data.view);
+                    }
+                })
+            }
+            else {
+                $(".help-block").removeClass("hidden");
+            }
 
         })
 
