@@ -1,25 +1,20 @@
-﻿@{
-    ViewBag.Title = "Image";
-}
-
-@model ImageEmotions.Models.EmotionsViewModel
+﻿@model ImageEmotions.Models.EmotionsViewModel
 
 <div class="row">
     <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <h2>Image analysis:</h2>
 
         @if (Model.Emotions != null)
         {
-            //foreach (var emotion in Model.Emotions)
-            //{
-            @*@Html.Partial("ImageFace", emotion.Face)*@
+            <div class="progress-bars">
+                @*foreach (var emotion in Model.Emotions)
+                {
+                @Html.Partial("ImageFace", emotion.Face)*@
 
-            foreach (var score in Model.Emotions.Scores)
-            {
+                @foreach (var score in Model.Emotions.Scores)
+                {
                 @Html.Partial("EmotionSlider", score)
-            }
-
-            //}
+                }
+            </div>
         }
         else
         {
@@ -28,7 +23,7 @@
             </div>
         }
 
-        @Html.ActionLink("Back", "Index", null, new { @class = "form-control" })
+        @*@Html.ActionLink("Back", "Index", null, new { @class = "form-control" })*@
 
     </div>
 

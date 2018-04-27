@@ -9,37 +9,66 @@
     <p class="lead">Upload, drag, or take a photo and submit</p>
 </div>
 
-@*<div class="form-group row">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-        <img id="uploadPreview" style="max-width:100%" />
-    </div>
-</div>*@
+<div id="results"></div>
 
-@using (Html.BeginForm("SubmitFile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-group row" id="target">
-        @*<div >You can drag an image file here</div>*@
-        @*<label for="file" class="control-label col-md-2">Image:</label>*@
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="file" name="file" id="file" class="form-control" accept="image/*" required />
+@*@using (Html.BeginForm("SubmitFile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+    {*@
+<div id="buttons">
+    <form class="form-horizontal">
+        <div class="form-group row" id="target">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-5 col-xs-12">
+                    <label class="btn btn-default btn-file">
+                        Browse <input type="file" name="file" id="file" style="display: none;" accept="image/*" />
+                    </label>
+                </div>
+
+                <div class="col-md-2 col-xs-12 text-center">
+                    <p class="or-text">OR</p>
+                </div>
+
+                <div class="col-md-5 col-xs-12">
+                    <input type="text" name="text" id="text" class="form-control" onchange="PreviewUrl();" placeholder="Enter image URL" />
+                </div>
+            </div>
         </div>
-    </div>
 
-    //TODO: Support URls
-    @*<div class="form-group row">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="file" name="file" id="file" class="form-control" accept="image/*" onchange="PreviewImage();" required />
+        <div class="form-group row">
+            <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
+                <input type="button" id="submit" class="btn btn-success form-control" value="Submit" />
+            </div>
         </div>
-    </div>*@
+    </form>
+</div>
+@*}*@
 
-    <div class="form-group row">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
-            <input type="submit" class="btn btn-primary form-control" />
-        </div>
-    </div>
+@* Image Submit *@
+<script type="text/javascript">
 
-}
+    $(function () {
+
+        $("#submit").click(function (e) {
+
+            var url = "@Url.Action("SubmitFile", "Home")";
+            //var data = $('#file')[0];
+            var file = new FormData($('form').get(0));
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: file,
+                cache: false,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $("#results").html(data.view);
+                }
+            })
+
+        })
+
+    })
+</script>
 
 @* Image Preview *@
 <script type="text/javascript">

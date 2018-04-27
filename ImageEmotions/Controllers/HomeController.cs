@@ -1,4 +1,5 @@
-﻿using ImageEmotions.Models;
+﻿using ImageEmotions.Common;
+using ImageEmotions.Models;
 using ImageEmotions.Services;
 using System;
 using System.Threading.Tasks;
@@ -20,6 +21,9 @@ namespace ImageEmotions.Controllers
         {
             string results = "";
 
+            if (file == null)
+                return View("Results", null);
+
             try
             {
                 results = await Task.Run(() => FileService.ProcessFileAsync(file));
@@ -31,7 +35,7 @@ namespace ImageEmotions.Controllers
 
             EmotionsViewModel vm = new EmotionsViewModel(results);
 
-            return View("Results", vm);
+            return Json(new { view = RazorViewString.RenderRazorViewToString(this, "Results", vm)});
 
         }
 

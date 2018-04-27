@@ -1,88 +1,119 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html {
+    height: 100%
 }
 
-/* Set padding to keep content from hitting the edges */
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-image: url('../Images/68515732-emotional-wallpapers.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
 .body-content {
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
 .dl-horizontal dt {
     white-space: normal;
 }
 
-
-
-/* Set width on the form input elements since they're 100% wide by default */
-/*input,
-select,
-textarea {
-    max-width: 280px;
-}*/
-
-
 footer {
-    position:absolute;
-    bottom:0;
-    left:15px;
-    right:0;
+    position: absolute;
+    bottom: 0;
+    left: 15px;
+    right: 0;
+    color:white;
 }
 
+#submit {
+    margin-top:20px;
+}
 
+footer a {
+    color: lightgreen;
+}
+
+.jumbotron {
+    background-color: #00000000;
+    color: white;
+    padding-top: 0px;
+    padding-bottom:0px;
+}
+
+#results {
+    color:white;
+}
+
+#buttons {
+    padding-top:20px;
+}
+
+.jumbotron h2 {
+    font-size: 48px;
+    font-weight: 100;
+}
+
+.or-text {
+    color:white;
+    font-size:24px;
+    font-weight: bold;
+}
 /*progress bars value align center */
 .progress {
-    text-align:center;
+    text-align: center;
 }
+
 .progress-value {
-    position:absolute;
-    right:0;
-    left:0;
+    position: absolute;
+    right: 0;
+    left: 0;
+}
+
+.progress-bars {
+    color:#333;
 }
 
 /*red #FF8E7D*/
 .progress-bar-anger {
-  background-color: #FF8E7D;
+    background-color: #FF8E7D;
 }
 
 /*orange #FFC36D*/
 .progress-bar-contempt {
-  background-color: #FFC36D;
+    background-color: #FFC36D;
 }
 
 /*yellow #FFDF67*/
 .progress-bar-happiness {
-  background-color: #FFDF67;
+    background-color: #FFDF67;
 }
 
 /*lime #A3D971*/
 .progress-bar-surprise {
-  background-color: #A3D971;
+    background-color: #A3D971;
 }
 
 /*green #55BBA7*/
 .progress-bar-disgust {
-  background-color: #55BBA7;
+    background-color: #55BBA7;
 }
 
 /*purple #B490B6*/
 .progress-bar-fear {
-  background-color: #B490B6;
+    background-color: #B490B6;
 }
 
 /*blue #80BBE7*/
 .progress-bar-sadness {
-  background-color: #80BBE7;
+    background-color: #80BBE7;
 }
 
 /*pink #F6B4C8*/
 .progress-bar-neutral {
-  background-color: #F6B4C8;
+    background-color: #F6B4C8;
 }
 
 
@@ -120,4 +151,15 @@ video {
 
 #canvas1, #canvas2, #canvas3 {
     width: 100%;
+}
+
+
+/*@media*/ 
+
+.btn-file {
+    width:100%;
+}
+
+#file {
+    width:100%
 }
