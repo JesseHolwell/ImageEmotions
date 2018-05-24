@@ -8,6 +8,9 @@ namespace ImageEmotions.Services
         private const string Uri = "https://westus.api.cognitive.microsoft.com/emotion/v1.0/recognize";
         private const string SubscriptionKey = "9d50196588bd4444ad9c23dd452f772c";
 
+        //private const string Uri = "https://australiaeast.api.cognitive.microsoft.com/face/v1.0/recognize";
+        //private const string SubscriptionKey = "6234f33a006f40029c1e54d86baedda4";
+
         public static async Task<string> Submit(HttpContent content)
         {
             using (var client = new HttpClient())

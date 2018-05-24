@@ -11,31 +11,31 @@ namespace ImageEmotions.Controllers
     public class StreamController : Controller
     {
 
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<ActionResult> SubmitImage(string image)
-        {
-            string results = "";
+        //[HttpPost]
+        //public async Task<ActionResult> SubmitImage(string image)
+        //{
+        //    string results = "";
 
-            try
-            {
-                var imageData = Convert.FromBase64String(image);
+        //    try
+        //    {
+        //        var imageData = Convert.FromBase64String(image);
 
-                results = await Task.Run(() => ImageService.ProcessImageAsync(imageData));
-            }
-            catch (Exception ex)
-            {
-                return View("Error", ex.Message as object);
-            }
+        //        results = await Task.Run(() => ImageService.ProcessImageAsync(imageData));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return View("Error", ex.Message as object);
+        //    }
 
-            EmotionsViewModel vm = new EmotionsViewModel(results);
+        //    EmotionsViewModel vm = new EmotionsViewModel(results);
 
-            return Json(new { success = true, result = results });
+        //    return Json(new { success = true, result = results });
 
-        }
+        //}
     }
 }

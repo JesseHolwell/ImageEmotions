@@ -6,7 +6,6 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
     background-image: url('../Images/68515732-emotional-wallpapers.jpg');
-    
     background-size: 100% 100%;
 }
 
@@ -45,10 +44,12 @@ footer a {
 
 #results {
     color: white;
+    padding-top:20px;
 }
 
 #buttons {
     padding-top: 20px;
+    height:50vh;
 }
 
 .jumbotron h2 {
@@ -174,4 +175,14 @@ video {
 
 #file {
     width: 100%
+}
+
+.loader {
+    color:white;
+    text-align:center;
+    padding-top:20px;
+}
+
+.loader .loading {
+    width:50%
 }

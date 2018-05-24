@@ -30,12 +30,15 @@ namespace ImageEmotions.Controllers
             }
             catch (Exception ex)
             {
-                return View("Error", ex.Message as object);
+                return Json(new { success = false, error = "Something went wrong...", exception = ex });
             }
 
             EmotionsViewModel vm = new EmotionsViewModel(results);
 
-            return Json(new { view = RazorViewString.RenderRazorViewToString(this, "Results", vm)});
+            if (vm.Emotions.Scores.Count > 0)
+                return Json(new { success = true, view = RazorViewString.RenderRazorViewToString(this, "Results", vm) });
+            else
+                return Json(new { success = false, error = "Something went wrong..." });
 
         }
 
