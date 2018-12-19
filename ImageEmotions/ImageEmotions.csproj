@@ -182,6 +182,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\68515732-emotional-wallpapers.jpg" />
+    <Content Include="Images\emotional-wallpaper.jpg" />
+    <Content Include="Images\loading.gif" />
     <Content Include="mstile-150x150.png" />
     <Content Include="safari-pinned-tab.svg" />
     <Content Include="Scripts\bootstrap.js" />
