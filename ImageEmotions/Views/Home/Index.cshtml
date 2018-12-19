@@ -5,17 +5,29 @@
 @model ImageEmotions.Models.EmotionsViewModel
 
 <div class="jumbotron">
-    <h2>@*Image Emotions*@</h2>
-    <h2>Digital Psychiatrist</h2>
-    @*<p class="lead">Upload, drag, or take a photo and submit</p>*@
-    <p class="lead">Tell me how you feel</p>
+    <h2>Image Emotions</h2>
+    <p class="lead">Upload, drag, or take a photo and submit</p>
 </div>
 
-<div id="buttons">
-    <form class="form-horizontal">
-        <div class="form-group row" id="target">
-            <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 ">
-                <div class="row">
+@*<div class="row"></div>*@
+<div class="col-xs-12 col-sm-offset-1 col-sm-10">
+
+    <div id="loading" class="loading">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+        <br />
+        <p class="processing">
+            Processing... This may take a while.
+        </p>
+    </div>
+
+    <div id="results"></div>
+
+    @*@using (Html.BeginForm("SubmitFile", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+        {*@
+    <div id="buttons">
+        <form class="form-horizontal">
+            <div class="form-group" id="target">
+                <div class="col-md-8 col-md-offset-2">
                     <div class="col-md-5 col-xs-12">
                         <label class="btn btn-default btn-file">
                             Browse <input type="file" name="file" id="file" style="display: none;" accept="image/*" />
@@ -31,37 +43,29 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="form-group row">
-            <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
-                <input type="button" id="submit" class="btn btn-success form-control" value="Submit" />
-                <span class="help-block hidden">No image found</span>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
-                <div class="loader">
-                    <img class="loading" src="~/Images/loading.gif" />
-                    Thinking
+            <div class="form-group row">
+                <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
+                    <input type="button" id="submit" class="btn btn-success form-control" value="Submit" />
+                    <span class="help-block hidden">No image found</span>
                 </div>
             </div>
-        </div>
-
-        <div id="results"></div>
-
-    </form>
+        </form>
+    </div>
 </div>
+@*}*@
 
 @* Image Submit *@
 <script type="text/javascript">
+
+    AOS.init();
 
     var url = "@Url.Action("SubmitFile", "Home")";
 
     $(function () {
 
-        $(".loader").hide();
+        $("#results").hide();
+        $("#loading").hide();
 
         $("#file").on("click", function () {
             $("#text").removeClass("success");
@@ -82,10 +86,12 @@
 
             if ($("#file")[0].files.length > 0) {
 
-                $(".loader").show();
-                $('html,body').animate({
-                    scrollTop: $(".loader").offset().top
-                }, 'slow');
+                //hide controls
+                $("#buttons").slideUp(function () {
+                    $("#loading").slideDown();
+                });
+
+                //add loading
 
                 $(".help-block").addClass("hidden");
                 var file = new FormData($('form').get(0));
@@ -98,13 +104,14 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        $("#results").html(data.view);
-                        $("#results").scro
-                        $(".loader").hide();
+                        //hide loading
 
-                        $('html,body').animate({
-                            scrollTop: $("#results").offset().top
-                        }, 'slow');
+                        //display results
+                        $("#results").html(data.view);
+                        //$("#results").show();
+                        $("#loading").slideUp(function () {
+                            $("#results").slideDown();
+                        });                        
                     }
                 })
             }
@@ -113,6 +120,16 @@
             }
 
         })
+
+        //$("#repeat").click(function (e) {
+
+        //    $("#file")[0].files.clear();
+
+        //    $(".help-block").addClass("hidden");
+        //    $("#results").hide();
+        //    $("#buttons").show();
+
+        //})
 
     })
 </script>
