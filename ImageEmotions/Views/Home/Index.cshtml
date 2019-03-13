@@ -28,26 +28,28 @@
         <form class="form-horizontal">
             <div class="form-group" id="target">
                 <div class="col-md-8 col-md-offset-2">
-                    <div class="col-md-5 col-xs-12">
+                    <div class="col-md-12 col-xs-12">
                         <label class="btn btn-default btn-file">
                             Browse <input type="file" name="file" id="file" style="display: none;" accept="image/*" />
                         </label>
                     </div>
 
-                    <div class="col-md-2 col-xs-12 text-center">
+                    @*Disable until feature works*@
+
+                    @*<div class="col-md-2 col-xs-12 text-center">
                         <p class="or-text">OR</p>
                     </div>
 
                     <div class="col-md-5 col-xs-12">
                         <input type="text" name="text" id="text" class="form-control" onchange="PreviewUrl();" placeholder="Enter image URL" />
-                    </div>
+                    </div>*@
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-2 col-md-offset-5 col-sm-8 col-sm-offset-2 col-xs-12">
                     <input type="button" id="submit" class="btn btn-success form-control" value="Submit" />
-                    <span class="help-block hidden">No image found</span>
+                    <span class="help-block hidden" style="font-weight:bold">No image found</span>
                 </div>
             </div>
         </form>
@@ -115,7 +117,7 @@
                             });
                         }
                         else {
-                            $(".help-block").html("An error has occured :(")
+                            $(".help-block").html("Oops. Something went wrong :(</br>Ensure a face is clearly visible in the image.")
                             $(".help-block").removeClass("hidden");
                             $("#loading").slideUp(function () {
                                 $("#buttons").slideDown();
