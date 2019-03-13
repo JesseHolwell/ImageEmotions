@@ -106,12 +106,21 @@
                     success: function (data) {
                         //hide loading
 
-                        //display results
-                        $("#results").html(data.view);
-                        //$("#results").show();
-                        $("#loading").slideUp(function () {
-                            $("#results").slideDown();
-                        });                        
+                        if (data.error == null) {
+                            //display results
+                            $("#results").html(data.view);
+                            //$("#results").show();
+                            $("#loading").slideUp(function () {
+                                $("#results").slideDown();
+                            });
+                        }
+                        else {
+                            $(".help-block").html("An error has occured :(")
+                            $(".help-block").removeClass("hidden");
+                            $("#loading").slideUp(function () {
+                                $("#buttons").slideDown();
+                            })
+                        }
                     }
                 })
             }

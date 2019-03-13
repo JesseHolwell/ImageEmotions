@@ -24,14 +24,14 @@ namespace ImageEmotions.Models
 
                 model.Scores = new List<EmotionScore>()
                     {
-                        new EmotionScore("anger", emotion.Scores.Anger*100),
-                        new EmotionScore("contempt", emotion.Scores.Contempt*100),
-                        new EmotionScore("happiness", emotion.Scores.Happiness*100),
-                        new EmotionScore("surprise", emotion.Scores.Surprise*100),
-                        new EmotionScore("disgust", emotion.Scores.Disgust*100),
-                        new EmotionScore("fear", emotion.Scores.Fear*100),
-                        new EmotionScore("sadness", emotion.Scores.Sadness*100),
-                        new EmotionScore("neutral", emotion.Scores.Neutral*100)
+                        new EmotionScore("anger", emotion.FaceAttributes.Emotion.Anger*100),
+                        new EmotionScore("contempt", emotion.FaceAttributes.Emotion.Contempt*100),
+                        new EmotionScore("happiness", emotion.FaceAttributes.Emotion.Happiness*100),
+                        new EmotionScore("surprise", emotion.FaceAttributes.Emotion.Surprise*100),
+                        new EmotionScore("disgust", emotion.FaceAttributes.Emotion.Disgust*100),
+                        new EmotionScore("fear", emotion.FaceAttributes.Emotion.Fear*100),
+                        new EmotionScore("sadness", emotion.FaceAttributes.Emotion.Sadness*100),
+                        new EmotionScore("neutral", emotion.FaceAttributes.Emotion.Neutral*100)
                     };
                 model.Face = new Rectangle(emotion.FaceRectangle.Left, emotion.FaceRectangle.Top,
                     emotion.FaceRectangle.Width, emotion.FaceRectangle.Height);

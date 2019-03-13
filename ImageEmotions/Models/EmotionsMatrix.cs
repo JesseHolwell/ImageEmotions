@@ -3,7 +3,8 @@
     public class EmotionsMatrix
     {
         public FaceRectangle FaceRectangle { get; set; }
-        public Scores Scores { get; set; }
+        public FaceAttributes FaceAttributes { get; set; }
+        //public Scores Scores { get; set; }
     }
 
     public class FaceRectangle
@@ -12,6 +13,11 @@
         public int Left { get; set; }
         public int Top { get; set; }
         public int Width { get; set; }
+    }
+
+    public class FaceAttributes
+    {
+        public Scores Emotion { get; set; }
     }
 
     public class Scores
