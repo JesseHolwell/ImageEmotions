@@ -1,34 +1,42 @@
 ﻿@model ImageEmotions.Models.EmotionsViewModel
 
 <div class="row">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 col-xs-12">
+    <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12">
+<div>
+    <span>You are feeling happy!</span>
 
-        @if (Model.Emotions != null)
-        {
-            <div class="progress-bars">
-                @*foreach (var emotion in Model.Emotions)
-                    {
-                    @Html.Partial("ImageFace", emotion.Face)*@
-
-                @foreach (var score in Model.Emotions.Scores)
+    @if (Model.Emotions != null)
+    {
+        <div class="progress-bars">
+            @*foreach (var emotion in Model.Emotions)
                 {
-                    @Html.Partial("EmotionSlider", score)
-                }
-            </div>
-        }
-        else
+                @Html.Partial("ImageFace", emotion.Face)*@
+
+            @foreach (var score in Model.Emotions.Scores.Where(x => x.Value > 0))
+            {
+                <p hidden>score @score.Key</p>
+
+                @Html.Partial("EmotionSlider", score);
+
+            }
+        </div>
+    }
+    @*else
         {
             <div>
                 <p>No Face detected in image.</p>
             </div>
-        }
+        }*@
 
-        <input type="button" id="repeat" class="btn btn-success form-control" value="Again" />
-        @*@Html.ActionLink("Back", "Index", null, new { @class = "form-control" })*@
-
-    </div>
+    @*<input type="button" id="repeat" class="btn btn-success form-control" value="Again" />*@
+    @*@Html.ActionLink("Back", "Index", null, new { @class = "form-control" })*@
 
 </div>
+
+</div>
+
+
+    </div>
 
 <script type="text/javascript">
     $("#repeat").click(function (e) {
@@ -40,4 +48,175 @@
         $("#buttons").show();
 
     })
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<div>
+        @if (Model.Emotions != null)
+        {
+            <div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        }
+        else
+        {
+            <div>
+                <p>No Face detected in image.</p>
+            </div>
+        }
+    </div>*@
+
+<script type="text/javascript">
+
+    @*var scores = @Model.Emotions.Scores;*@
+
+    @* Highcharts *@
+
+    //Highcharts.setOptions({
+    //    global: {
+    //        useUTC: false
+    //    }
+    //});
+
+    //    var chart = Highcharts.chart('chart', {
+    //  chart: {
+    //    plotBackgroundColor: null,
+    //    plotBorderWidth: null,
+    //    plotShadow: false,
+    //    type: 'pie'
+    //  },
+    //  title: {
+    //    text: null
+    //  },
+    //  tooltip: {
+    //    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    //  },
+    //  accessibility: {
+    //    point: {
+    //      valueSuffix: '%'
+    //    }
+    //  },
+    //plotOptions: {
+    //    pie: {
+    //        allowPointSelect: true,
+    //        cursor: 'pointer',
+    //        dataLabels: {
+    //            enabled: false
+    //        },
+    //        showInLegend: true
+    //    }
+    //},
+        @*series: [{
+            name: 'Emotions',
+            colorByPoint: true,
+            data: [
+                @for (var v = 0; v < Model.Emotions.Scores.Count(); v++)
+                {
+                    <text>
+                    {
+                        name: '@Model.Emotions.Scores[v].Key',
+                        y: @Model.Emotions.Scores[v].Value,
+
+                        @if (v == 0)
+                        {
+                            <text>
+                            sliced: true,
+                            selected: true
+                            </text>
+                        }
+                    },
+                    </text>
+                }
+            ]
+        }]*@
+    //});
+
+    @* Chart data *@
+
+        //update series with random data
+    //    function updateSeries() {
+    //        for (i = 0; i < chart.series.length; i++) {
+    //            // set up the updating of the chart each second
+    //            var line = chart.series[i];
+    //            var x = (new Date()).getTime(), // current time
+    //                y = Math.random();
+    //            line.addPoint([x, y], false, true, true);
+    //        }
+    //        chart.redraw()
+    //    }
+
+    ////Update series with response results
+    //function updateSeriesWithResults(results) {
+
+    //    var scores = [0, 0, 0, 0, 0, 0, 0, 0]
+    //    if (results != "[]") {
+    //        var scores = JSON.parse(results)[0].scores;
+    //    }
+
+    //    var x = (new Date()).getTime() // current time
+
+    //    for (i = 0; i < chart.series.length; i++) {
+    //        var line = chart.series[i];
+    //        var y = scores[chart.series[i].name]
+    //        line.addPoint([x, y], true, true, true);
+    //    }
+    //    chart.redraw()
+    //}
+
+    ////populate each series
+    //function getMultipleRandomSeries() {
+    //    var series = [];
+    //    for (i = 0; i < emotionParams.length; i++)
+    //        series.push(getRandomSeries(i));
+    //    return series;
+    //}
+
+    ////initialise series
+    //function getRandomSeries(i) {
+    //    return {
+    //        name: emotionParams[i].name,
+    //        data:
+    //            (function () {
+    //                var data = [],
+    //                    time = (new Date()).getTime(),
+    //                    i;
+
+    //                for (i = -emotionParams.length; i <= 0; i += 1) {
+    //                    data.push({
+    //                        x: time,
+    //                        y: 0
+    //                    });
+    //                }
+    //                return data;
+    //            }())
+    //    }
+    //}
 </script>

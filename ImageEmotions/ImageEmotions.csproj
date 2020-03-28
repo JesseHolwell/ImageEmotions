@@ -183,6 +183,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\emotional-wallpaper.jpg" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\user_placeholder.svg" />
     <Content Include="mstile-150x150.png" />
     <Content Include="safari-pinned-tab.svg" />
     <Content Include="Scripts\bootstrap.js" />

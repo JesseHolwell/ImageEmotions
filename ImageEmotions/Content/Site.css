@@ -25,13 +25,13 @@ body {
     white-space: normal;
 }
 
-.loading {
+#loading {
     color: white;
     text-align: center;
     padding-top: 50px;
 }
 
-    .loading i {
+    #loading i {
         color: #ff3600;
     }
 
@@ -112,7 +112,7 @@ footer p {
     width:80%;
 }
 
-.jumbotron h2 {
+h2 {
     font-size: 48px;
     font-weight: 100;
 }
@@ -236,3 +236,36 @@ video {
 #file {
     width: 100%
 }
+
+.color-primary {
+    color: #fea314;
+}
+
+.color-secondary {
+    color: #f3e2c6;
+}
+
+#user-image {
+    width:90%;
+    margin-left:5%;
+    /*margin-top:10vh;*/
+}
+
+/*.jumbotron {
+    margin-top:10vh;
+}*/
+
+label.select-photo {
+    width: 80%;
+    margin-left: 10%;
+    background-color: #f3e2c6;
+    font-weight:bold;
+}
+
+    label.select-photo:hover {
+        background-color: #fea314;
+    }
+
+    .jumbotron h2 {
+        padding-bottom: 5rem;
+    }
