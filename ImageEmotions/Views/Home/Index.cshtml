@@ -3,61 +3,79 @@
 }
 
 @model ImageEmotions.Models.EmotionsViewModel
-
-<div id="upload" class="section row">
-    <div class="col-xs-12">
-        <h2 class="color-primary">Emotion scanner</h2>
-    </div>
-    <div class="col-md-6">
-        @*<div class="jumbotron">
-            <h2>whats this</h2>*@
-        <div id="instructions">
-            <p class="lead color-secondary">
-                Upload, or take a photo and an AI will determine what you are feeling.
-                <br />
-                Try expressing something like surprise, happiness, anger.
-            </p>
+<div class="wrapper" data-aos="fade-down" data-aos-anchor-placement="top-center" data-aos-duration="500">
+    <div id="upload" class="section row">
+        <div class="col-xs-12">
+            <h2 class="color-primary">Emotion scanner</h2>
         </div>
-        @*</div>*@
-
-        <div id="loading" class="section row">
-            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-                <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
-                <br />
-                <p class="processing">
-                    Thinking...
+        <div class="col-md-6">
+            @*<div class="jumbotron">
+                <h2>whats this</h2>*@
+            <div id="instructions">
+                <p class="lead color-secondary">
+                    Upload, or take a photo and an AI will determine what you are feeling.
+                    <br />
+                    Try expressing something like surprise, happiness, anger.
                 </p>
             </div>
-        </div>
+            @*</div>*@
 
-        <div id="results" class="section row">
-            <div class="col-xs-12 col-sm-offset-1 col-sm-10">
-                <div id="results-content">
-
+            <div id="loading" class="section row">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw margin-bottom"></i>
+                    <br />
+                    <p class="processing">
+                        Thinking...
+                    </p>
                 </div>
-
-                <input type="button" id="repeat" class="btn btn-success form-control" value="Again" />
             </div>
+
+            <div id="results" class="section row">
+                <div class="col-xs-12 col-sm-offset-1 col-sm-10">
+                    <div id="results-content">
+
+                    </div>
+
+                    <input type="button" id="repeat" class="btn btn-success form-control" value="Again" />
+                </div>
+            </div>
+
         </div>
 
+        <div class="col-md-4 col-md-offset-1">
+            <img src="~/Images/user_placeholder.svg" id="user-image" />
+
+            <form class="form-horizontal">
+                <div class="form-group" id="target">
+                    <label class="btn btn-default btn-file select-photo">
+                        <span id="image-selection">CHOOSE AN IMAGE</span> <input type="file" name="file" id="file" style="display: none;" accept="image/*" />
+                    </label>
+                </div>
+            </form>
+
+            <div class="help-block"></div>
+        </div>
+
+
     </div>
-
-    <div class="col-md-4 col-md-offset-1">
-        <img src="~/Images/user_placeholder.svg" id="user-image" />
-
-        <form class="form-horizontal">
-            <div class="form-group" id="target">
-                <label class="btn btn-default btn-file select-photo">
-                    <span id="image-selection">CHOOSE AN IMAGE</span> <input type="file" name="file" id="file" style="display: none;" accept="image/*" />
-                </label>
-            </div>
-        </form>
-
-        <div class="help-block"></div>
-    </div>
+    <div class="push"></div>
 </div>
 
 
+<div class="debug">
+    <button onclick="phaseInit()">Init</button>
+    <button onclick="phaseLoad()">Load</button>
+    <button onclick="phaseResult()">Result</button>
+    <button onclick="phaseError()">Error</button>
+</div>
+<style>
+    .debug {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(126, 60, 152, 0.68);
+    }
+</style>
 
 
 
@@ -134,24 +152,98 @@
 
         })
 
-        var index = 0;
-        function updateProcessingText() {
-            var text = "";
-            index++;
+    })
 
-            if (index == 1)
-                text = "Processing..."
-            else if (index == 2)
-                text = "Analyzing..."
-            if (index == 3) {
-                text = "Thinking..."
-                index = 0
-            }
+    var index = 0;
+    function updateProcessingText() {
+        var text = "";
+        index++;
 
-            $(".processing").html(text);
+        if (index <= 1)
+            text = "Processing..."
+        else if (index == 2)
+            text = "Analyzing..."
+        if (index >= 3) {
+            text = "Thinking..."
+            index = 0
         }
 
-    })
+        $(".processing").html(text);
+    }
+
+    var processing;
+
+    function phaseInit() {
+        $("#file").val("");
+
+        $("#instructions").show();
+        $("#loading").hide();
+        $("#results").hide();
+        $(".help-block").addClass("hidden");
+        $("#image-selection").html("CHOOSE IMAGE");
+
+        $("img#user-image")[0].src = URL.createObjectURL("~/Images/user_placeholder.svg");
+
+        clearInterval(processing);
+    }
+
+    function phaseLoad() {
+        $("#instructions").hide();
+        $("#loading").show();
+        $("#results").hide();
+        $(".help-block").addClass("hidden");
+        $("#image-selection").html("CHOOSE IMAGE");
+        processing = setInterval(updateProcessingText, 1000);
+    }
+
+    var fakeUrl = "@Url.Action("FakeSubmitFile", "Home")";
+    function phaseResult() {
+        $("#instructions").hide();
+        $("#loading").hide();
+        $("#results").show();
+        $(".help-block").addClass("hidden");
+        $("#image-selection").html("CHOOSE ANOTHER");
+
+        $.ajax({
+            url: fakeUrl,
+            type: 'POST',
+            //data: file,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data.error == null) {
+                    $("#results").html(data.view);
+                    $("#loading").slideUp(function () {
+                        $("#results").fadeIn();
+                        $("#image-selection").html("CHOOSE ANOTHER");
+                    });
+                }
+                else {
+                    $(".help-block").html("Oops. Something went wrong :(</br>Ensure a face is clearly visible in the image.")
+                    $(".help-block").removeClass("hidden");
+
+                    $("#loading").slideUp(function () {
+                        $("#instructions").slideDown();
+                    });
+
+                    clearInterval(processing)
+                }
+            }
+        })
+    }
+
+    function phaseError() {
+        $("#instructions").show();
+        $("#loading").hide();
+        $("#results").hide();
+        $(".help-block").html("Oops. Something went wrong :(</br>Ensure a face is clearly visible in the image.")
+        $(".help-block").removeClass("hidden");
+        $("#image-selection").html("CHOOSE IMAGE");
+
+        clearInterval(processing);
+
+    }
 </script>
 
 <script type="text/javascript">
